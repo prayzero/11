@@ -39,10 +39,38 @@
             height: 40px;
             margin-bottom: 10px;
         }
+        .form-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+        input[type="text"] {
+            margin: 5px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <h1>나만의 바로가기 페이지</h1>
+
+    <div class="form-container">
+        <input type="text" id="shortcut-title" placeholder="제목 입력" required>
+        <input type="text" id="shortcut-url" placeholder="URL 입력" required>
+        <button id="add-shortcut">바로가기 추가</button>
+    </div>
+
     <div class="container" id="shortcuts">
         <!-- 바로가기 아이템 예시 -->
         <a href="https://www.youtube.com" class="shortcut" target="_blank">
@@ -63,24 +91,48 @@
 
         function loadShortcuts() {
             const container = document.getElementById('shortcuts');
+            container.innerHTML = '';
             shortcuts.forEach(shortcut => {
-                const link = document.createElement('a');
-                link.href = shortcut.url;
-                link.className = 'shortcut';
-                link.target = '_blank';
-
-                const img = document.createElement('img');
-                img.src = shortcut.icon;
-                img.alt = shortcut.name;
-                link.appendChild(img);
-
-                const span = document.createElement('span');
-                span.textContent = shortcut.name;
-                link.appendChild(span);
-
-                container.appendChild(link);
+                createShortcutElement(shortcut);
             });
         }
+
+        function createShortcutElement(shortcut) {
+            const container = document.getElementById('shortcuts');
+
+            const link = document.createElement('a');
+            link.href = shortcut.url;
+            link.className = 'shortcut';
+            link.target = '_blank';
+
+            const img = document.createElement('img');
+            img.src = shortcut.icon || 'https://via.placeholder.com/40';
+            img.alt = shortcut.name;
+            link.appendChild(img);
+
+            const span = document.createElement('span');
+            span.textContent = shortcut.name;
+            link.appendChild(span);
+
+            container.appendChild(link);
+        }
+
+        document.getElementById('add-shortcut').addEventListener('click', () => {
+            const title = document.getElementById('shortcut-title').value;
+            const url = document.getElementById('shortcut-url').value;
+
+            if (title && url) {
+                const newShortcut = { name: title, url: url, icon: '' };
+                shortcuts.push(newShortcut);
+                createShortcutElement(newShortcut);
+                
+                // 입력 필드 초기화
+                document.getElementById('shortcut-title').value = '';
+                document.getElementById('shortcut-url').value = '';
+            } else {
+                alert('제목과 URL을 모두 입력해주세요.');
+            }
+        });
 
         loadShortcuts();
     </script>
