@@ -78,6 +78,7 @@
             position: relative;
             text-decoration: none;
             color: white;
+            cursor: pointer;
         }
         .shortcut .delete-btn {
             position: absolute;
@@ -319,6 +320,7 @@
 
             const link = document.createElement('div');
             link.className = 'shortcut';
+            link.setAttribute('data-url', shortcut.url);
 
             const span = document.createElement('span');
             span.textContent = shortcut.name;
@@ -328,6 +330,7 @@
             deleteBtn.className = 'delete-btn';
             deleteBtn.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 deleteShortcut(index);
             });
             link.appendChild(deleteBtn);
@@ -337,9 +340,14 @@
             editSpan.textContent = '(수정)';
             editSpan.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 openEditModal(index);
             });
             link.appendChild(editSpan);
+
+            link.addEventListener('click', () => {
+                window.open(shortcut.url, '_blank');
+            });
 
             container.appendChild(link);
         }
