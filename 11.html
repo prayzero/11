@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바로가기 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #303030;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        .shortcut {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            text-align: center;
+            border-radius: 10px;
+            background-color: #424242;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+        }
+        .shortcut img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>나만의 바로가기 페이지</h1>
+    <div class="container" id="shortcuts">
+        <!-- 바로가기 아이템 예시 -->
+        <a href="https://www.youtube.com" class="shortcut" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">
+            <span>유튜브</span>
+        </a>
+        <a href="https://www.naver.com" class="shortcut" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Naver_Logotype.svg" alt="Naver">
+            <span>네이버</span>
+        </a>
+    </div>
+
+    <script>
+        const shortcuts = [
+            { name: '메이플인벤', url: 'https://www.inven.co.kr', icon: 'https://example.com/maple-icon.png' },
+            { name: '넷플릭스', url: 'https://www.netflix.com', icon: 'https://example.com/netflix-icon.png' }
+        ];
+
+        function loadShortcuts() {
+            const container = document.getElementById('shortcuts');
+            shortcuts.forEach(shortcut => {
+                const link = document.createElement('a');
+                link.href = shortcut.url;
+                link.className = 'shortcut';
+                link.target = '_blank';
+
+                const img = document.createElement('img');
+                img.src = shortcut.icon;
+                img.alt = shortcut.name;
+                link.appendChild(img);
+
+                const span = document.createElement('span');
+                span.textContent = shortcut.name;
+                link.appendChild(span);
+
+                container.appendChild(link);
+            });
+        }
+
+        loadShortcuts();
+    </script>
+</body>
+</html>
